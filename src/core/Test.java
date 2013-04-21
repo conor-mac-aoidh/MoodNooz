@@ -7,7 +7,6 @@ import java.util.Vector;
  * used for running main application tests 
  * 
  * @author	Conor Mac Aoidh <10339063@ucdconnect.ie>
- * @date	20-02-13
  * class:	COMP30050 Software Engineering Project 3
  */
 public class Test {
@@ -23,49 +22,31 @@ public class Test {
 	 */
 	public static void main( String [ ] args ){
 
-		// test the web news document class
-		//WebNewsDocumentTest( );
+		// test the news document class
+		//NewsDocumentTest( );
 		
 		// test the affect map class
 		//AffectMapTest( );
 		
 		// test the mood dictionary class
-		MoodDictionaryTest( );
+		//MoodDictionaryTest( );
+		
+		// test the ress reader
+		RSSReaderTest( );
 	}
 
 	/**
-	 * WebNewsDocumentTest
+	 * NewsDocumentTest
 	 * 
-	 * tests the WebNewsDocument application
+	 * tests the NewsDocument class
 	 * 
 	 * @return void
 	 * @access public
 	 */
-	public static void WebNewsDocumentTest( ){
+	public static void NewsDocumentTest( ){
 
 		try{
-			WebNewsDocument page = null;
-			
-			page = new WebNewsDocument( "http://www.irishtimes.com/newspaper/breaking/2013/0205/breaking46.html" );
-			//page = new WebNewsDocument( "http://www.irishtimes.com/newspaper/weekend/2013/0209/1224329826822.html" );
-			//page = new WebNewsDocument( "http://www.irishtimes.com/newspaper/finance/2013/0208/1224329784520.html" );
-			
-			//page = new WebNewsDocument( "http://www.guardian.co.uk/education/2013/feb/07/gove-gcse-reforms-from-2015" );
-			//page = new WebNewsDocument( "http://www.guardian.co.uk/media/2013/feb/04/channel-4-big-fat-quiz-daily-mail" );
-			//page = new WebNewsDocument( "http://www.guardian.co.uk/technology/2013/feb/04/james-dyson-airblade-tap" );
-
-			//System.out.println( page.getRawText( ) );
-			//System.out.println( page.getHeadlineText( ) );
-			//System.out.println( page.getBodyText( ) );
-			
-			// get sentences and print
-			Vector<String> sentences = page.getSentencesOfText( );
-			for( String sentence : sentences ){
-				System.out.println( sentence );
-			}
-
-			System.out.println( "[TEST]: WebNewsDocument all tests OK" );
-		
+			// @todo
 		}
 		catch( Exception e ){ // catch exceptions, display errors
 			System.out.println( e.getMessage( ) );
@@ -217,5 +198,12 @@ public class Test {
 			System.out.println( e.getMessage( ) );
 			System.out.println( "[TEST]: MoodDictionary tests FAILED" );
 		}		
+	}
+	
+	/**
+	 * RSSReaderTest
+	 */
+	public static void RSSReaderTest( ){
+		// @todo
 	}
 }

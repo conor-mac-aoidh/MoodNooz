@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN"  "http://java.sun.com/j2ee/dtds/web-app_2_2.dtd"> 
+	
+<web-app>
+  
+<!--  -->
+<!--  Context parameters -->
+<!--  -->
+  <context-param>
+         <param-name>PARAMETER_ENCODING</param-name>
+         <param-value>UTF-8</param-value>
+  </context-param>
+
+<!-- -->
+<!-- Servlet Mapping Section -->
+<!-- -->
+
+<locale-encoding-mapping-list>
+<locale-encoding-mapping>
+<locale>en</locale>
+<encoding>UTF-8</encoding>
+</locale-encoding-mapping>
+</locale-encoding-mapping-list>
+
+</web-app>

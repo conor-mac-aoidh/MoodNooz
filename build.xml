@@ -1,0 +1,43 @@
+<!--
+  Build.xml, MoodNooz
+
+  Use this file to compile the MoodNooz project.
+
+  Usage: ./ant
+-->
+<project name="MoodNooz" default="compile" basedir=".">
+
+    	<description>MoodNooz build file.</description>
+
+	<!-- set global properties for this build -->
+	<property name="src" location="./WEB-INF/src"/>
+	<property name="build" location="./WEB-INF/classes"/>
+	
+	<target name="init">
+		<!-- Create the time stamp -->
+		<tstamp/>
+		<!-- Create the build directory structure used by compile -->
+		<mkdir dir="${build}"/>
+	</target>
+
+  	<!-- Compile -->
+	<target name="compile" depends="init">
+		<!-- Compile the java code from ${src} into ${build} -->
+		<javac srcdir="${src}" destdir="${build}"/>
+	</target>
+
+
+	<!-- Create WAR -->
+	<target name="war" depends="compile">
+		<war destfile="${warfile}" >
+			<lib dir="./WEB-INF/lib" />
+			<classes dir="./WEB-INF/classes" />
+			<fileset dir="." includes="jsp/**"/>
+		</war>
+	</target>
+
+	<!-- Clean -->	
+	<target name="clean">
+		<delete dir="${build.dir}"/>
+	</target>
+</project>

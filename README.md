@@ -18,3 +18,15 @@ Unix: 		./tomcat/bin/shutdown.bat
 Windows: 	./tomcat/bin/shutdown.bat	
 
 The project should then be accessible by accessing http://localhost:8080 in a web browser.
+
+Note: You will probably have to update the symbolic link ./tomcat/webapps/ROOT to point to ./
+
+Building
+=======
+
+This project uses the ant build system. To build from the root directory execute ant:
+
+./ant
+
+This command compiles the source and deploys a warfile to the tomcat server. After this
+simply restart the tomcat server and the changes will have taken effect.

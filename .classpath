@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="/home/conor/workspace/MoodNooz/lib/jsoup-1.7.2.jar"/>
-	<classpathentry kind="output" path="bin"/>
+<classpath>	
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="WEB-INF/src"/>
+	<classpathentry kind="var" path="tomcat/lib/servlet-api.jar"/>
+	<classpathentry kind="var" path="tomcat/lib/jasper.jar"/>
+	<classpathentry kind="var" path="tomcat/lib/jsp-api.jar"/>
+	<classpathentry kind="var" path="tomcat/lib/el-api.jar"/>
+	<classpathentry kind="var" path="tomcat/lib/annotations-api.jar"/>	
+	<classpathentry kind="output" path="WEB-INF/classes"/>
 </classpath>

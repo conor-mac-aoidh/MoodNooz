@@ -11,8 +11,9 @@
 
 	<!-- set global properties for this build -->
 	<property name="src" location="./WEB-INF/src"/>
-	<property name="build" location="./WEB-INF/classes"/>
-	
+	<property name="build" location="./WEB-INF/classes"/>	
+	<property name="lib" value="./WEB-INF/lib"/>
+
 	<target name="init">
 		<!-- Create the time stamp -->
 		<tstamp/>
@@ -20,10 +21,19 @@
 		<mkdir dir="${build}"/>
 	</target>
 
+	<!-- specify jar files to compile -->
+	<path id="classpath">
+		<fileset dir="${lib}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+
   	<!-- Compile -->
 	<target name="compile" depends="init">
 		<!-- Compile the java code from ${src} into ${build} -->
-		<javac srcdir="${src}" destdir="${build}"/>
+		<javac srcdir="${src}" destdir="${build}">
+			<classpath refid="classpath"/>
+		</javac>
 	</target>
 
 

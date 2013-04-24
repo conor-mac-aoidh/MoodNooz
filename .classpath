@@ -2,6 +2,9 @@
 <classpath>	
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="WEB-INF/src"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/lucene-core-4.2.1.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/lucene-queryparser-4.2.1.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/lucene-analyzers-common-4.2.1.jar"/>
 	<classpathentry kind="var" path="tomcat/lib/servlet-api.jar"/>
 	<classpathentry kind="var" path="tomcat/lib/jasper.jar"/>
 	<classpathentry kind="var" path="tomcat/lib/jsp-api.jar"/>

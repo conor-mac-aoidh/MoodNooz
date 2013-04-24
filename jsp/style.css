@@ -27,12 +27,12 @@ body{ text-align:center }
 #wrapper{ width:100% }
 #top{ height:80px }
 #top-wrapper{ width:80%;margin:0 auto }
-#top #title{ float:left;font-size:28px;width:204px;margin-top:42px;color:#050 }
-#top #title span{ font-size:34px;color:#050 }
+#top #title{ float:left;font-size:28px;width:204px;margin-top:42px;color:#115 }
+#top #title span{ font-size:34px;color:#03c }
 #top h2{ float:right;margin-top:45px }
 #title #subtitle{ font-size:12px;float:left;color:#eee;font-style:italic }
 #system-error .runtime-errors{ font-weight:bold;font-size:14px;margin:8px 8px 0 8px;color:#a33 }
-#header{ background:#2a2a2a;border:1px solid transparent;height:40px }
+#header{ background:#115;border:1px solid transparent;height:40px }
 #header #menu{ color:#fff;font-size:16px;margin:0 auto;text-align:left;width:77%;border:1px solid #2a2a2a }
 #container{ width:82%;margin:0 auto;border-top:1px solid transparent }
 #main{ text-align:left;margin:25px auto;width:94%;border-top:1px solid transparent }
@@ -40,12 +40,12 @@ body{ text-align:center }
 #query > *{ display:inline }
 #expanded{ display:none }
 #footer{ text-align:left;height:27px;width:100% }
-#bottom-wrapper{ text-align:left;color:#050;font-size:13px;border-top:8px solid #050;margin-top:20px }
+#bottom-wrapper{ text-align:left;color:#115;font-size:13px;border-top:8px solid #039;margin-top:20px }
 #bottom{ width:76%;margin:20px auto }
 #bottom div{ width:30%;float:left }
 #bottom img{ float:left;margin-right:10px }
-#bottom h2 a{color:#050;font-weight:bold }
-#bottom a{ color:#050;font-size:13px }
+#bottom h2 a{color:#115;font-weight:bold }
+#bottom a{ color:#115;font-size:13px }
 #bottom p{ color:#000;font-size:13px;margin-left:70px }
 
 .download-link{ background: url(img/download.png);width:200px;height:46px;padding:9px 0 0 18px;margin-top:20px;float:left;color:#fff }
@@ -56,11 +56,11 @@ body{ text-align:center }
 
 /* page contents */
 
-h1{ color:#050;font-size:26px;margin:0.5% }
-h2{ color:#050;font-size:18px;margin:0.5% }
-h3{ color:#050;font-size:16px }
+h1{ color:#115;font-size:26px;margin:0.5% }
+h2{ color:#115;font-size:18px;margin:0.5% }
+h3{ color:#115;font-size:16px }
 p{ margin:1.5% .5% }
-a{ text-decoration:none;color:#005500;text-decoration:underline }
+a{ text-decoration:none;color:#115;text-decoration:underline }
 b{ font-weight:bold }
 i{ font-style:italic }
 em{ font-weight:italic }
@@ -74,7 +74,7 @@ input{ border:1px solid #666;padding:3px;width:100% }
 #header #menu ul li a{ color:#fff;text-decoration:none;padding:8px 9px }
 #header #menu ul li a:hover{ background:#666 }
 #header #menu ul li a.parent-hover{ background:#666 }
-#header #menu ul li a.current{ background:#fff;color:#000;border-top:6px solid #1a1 }
+#header #menu ul li a.current{ background:#fff;color:#000;border-top:6px solid #03c }
 #header #menu ul li{ float:left }
 
 /* Tabs */
@@ -85,7 +85,7 @@ input{ border:1px solid #666;padding:3px;width:100% }
 .ui-tabs-nav li a{ color:#fff;padding:2px 10px }
 .ui-tabs-nav li a:active,.ui-tabs-nav li a:focus{ outline:0 }
 .ui-tabs-nav li a:hover{ background:#666 }
-li.ui-tabs-active a{ color:#000;background:#fff;border-top:4px solid #11AA11 }
+li.ui-tabs-active a{ color:#000;background:#fff;border-top:4px solid #03c }
 li.ui-tabs-active a:hover{ background:#fff }
 #tabs .ui-widget-content{ border-top:none }
 #tabs #tabs-content{ margin:15px 10px }

@@ -35,7 +35,7 @@ public class RSSReader{
 	 * 
 	 * @param e
 	 */
-	public RSSReader( ArrayList entries){
+	public RSSReader( ArrayList entries ){
 		this.entries = entries;
 	}
 	

@@ -1,0 +1,3 @@
+<%@page 
+	import="core.AffectMap"
+%>

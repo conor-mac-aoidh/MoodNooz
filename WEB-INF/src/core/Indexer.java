@@ -38,7 +38,7 @@ public class Indexer {
             for(LuceneDocument doc:RSSentries){
                 indexer.AddDoc(doc);
             }
-            indexer.RemoveDuplicates();
+            indexer.removeDuplicates();
             indexer.Close();
         
         

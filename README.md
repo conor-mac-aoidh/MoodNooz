@@ -9,7 +9,7 @@ This project uses the apache tomcat web server to serve jsp files. A copy of the
 server is bundled with the MoodNooz application. In order to start the server
 you must run:
 
-Unix: 		./tomcat/bin/startup.bat
+Unix: 		./tomcat/bin/startup.sh
 Windows: 	./tomcat/bin/startup.bat
 
 Similarily to shutdown:

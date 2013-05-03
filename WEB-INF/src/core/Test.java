@@ -1,5 +1,11 @@
 package core;
+import java.io.IOException;
 import java.util.Vector;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
 
 /**
  * Test
@@ -20,7 +26,7 @@ public class Test {
 	 * @throws Exception 
 	 * @access public
 	 */
-	public static void main( String [ ] args ){
+	public static void main( String [ ] args ) throws Exception{
 
 		// test the news document class
 		//NewsDocumentTest( );
@@ -32,7 +38,8 @@ public class Test {
 		//MoodDictionaryTest( );
 		
 		// test the ress reader
-		RSSReaderTest( );
+		//RSSReaderTest( );
+                SearchTest();
 	}
 
 	/**
@@ -61,7 +68,15 @@ public class Test {
 	 * 
 	 * @access public
 	 * @return void
+         * 
+         * 
 	 */
+        
+        public static void SearchTest(){
+            LuceneSearcher searcher = new LuceneSearcher();
+		
+		searcher.printHits(searcher.search("Labour", "title"));
+        }
 	public static void AffectMapTest( ){
 		
 		try{
@@ -105,7 +120,7 @@ public class Test {
 				"cache",
 				"crumpet",
 				"overview",
-				"pounce"
+				"pounced"
 			};
 			
 			for( String word : positive ){
@@ -203,7 +218,20 @@ public class Test {
 	/**
 	 * RSSReaderTest
 	 */
-	public static void RSSReaderTest( ){
-		// @todo
+	public static void RSSReaderTest( ) throws Exception{
+                ArrayList RSSentries = new ArrayList();
+		RSSReader reader = new RSSReader(RSSentries);
+            try {
+                //reader.fetch("http://www.rte.ie/news/rss/news-headlines.xml");
+                //reader.fetch("http://feeds.guardian.co.uk/theguardian/rss");
+                reader.fetch("http://rss.feedsportal.com/c/266/f/3492/index.rss");
+            } catch (ParserConfigurationException ex) {
+                Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SAXException ex) {
+                Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            //System.out.println(reader.entries.get(2).title);
 	}
 }

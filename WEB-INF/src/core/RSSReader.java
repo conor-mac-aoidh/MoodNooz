@@ -23,9 +23,11 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 
+
+
 public class RSSReader{
 
-	ArrayList entries;
+	ArrayList<LuceneDocument> entries;
 	
 	/**
 	 * RSSReader
@@ -35,7 +37,7 @@ public class RSSReader{
 	 * 
 	 * @param e
 	 */
-	public RSSReader( ArrayList entries ){
+	public RSSReader( ArrayList<LuceneDocument> entries ){
 		this.entries = entries;
 	}
 	
@@ -49,22 +51,26 @@ public class RSSReader{
 	 * @throws SAXException
 	 * @throws IOException
 	 */
-	public void fetch( String url ) throws ParserConfigurationException, SAXException, IOException{
+	public void fetch( String url ) throws ParserConfigurationException, SAXException, IOException, Exception{
 		URL feed = new URL( url );
 		DocumentBuilder builder = DocumentBuilderFactory.newInstance( ).newDocumentBuilder( );
 		Document doc = builder.parse( feed.openStream( ) );
 		NodeList nodes = doc.getElementsByTagName( "item" );
 		Element element;
-		String t, d, l, a, p;
+		String t, d, l, b, p;
 		
 		for( int i = 0; i < nodes.getLength( ); ++i ){
 			element = (Element) nodes.item( i );
-			t = this.getElementValue( element, "title" );
-			d = this.getElementValue( element, "description" );
-			l = this.getElementValue( element, "link" );
-			a = this.getElementValue( element, "dc:creator" );
-			p = this.getElementValue( element, "pubDate" );
-			//this.entries.add( new MyDocument( t, d, l, a, p ) );
+                        t=element.getElementsByTagName("title").item(0).getTextContent();
+			d=element.getElementsByTagName("description").item(0).getTextContent();
+                        l=element.getElementsByTagName("link").item(0).getTextContent();
+                        p=element.getElementsByTagName("pubDate").item(0).getTextContent();
+                        
+                        NewsDocument nd = new NewsDocument(l);
+                        b = nd.getBodyText();
+                        if(b.equals("")){continue;}
+                        System.out.println(b);
+			this.entries.add( new LuceneDocument( t, d, l, p, b ) );
 		}
 	}
 	
@@ -85,6 +91,6 @@ public class RSSReader{
 				return sub.item( i ).getNodeValue( );
 			}
 		}
-		return "";
+		return "h";
 	}
 }

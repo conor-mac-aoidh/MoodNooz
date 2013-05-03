@@ -9,43 +9,64 @@
 
 package core;
 
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.StringField;
-import org.apache.lucene.document.TextField;
+
+import java.net.*;
+import java.io.*;
+import java.util.Vector;
+import java.lang.Object;
+import java.text.BreakIterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.jsoup.Jsoup;
+import org.jsoup.helper.Validate;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 public class NewsDocument {
+    URL url;
 
-	/**
-	 * doc
-	 * 
-	 * Document object to hold NewsDocument
-	 */
-	Document doc;
+public NewsDocument(String url){
+        try {
+            this.url = new URL(url);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(NewsDocument.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        	
+    
+}
+
+
+public String getRawText() throws Exception{
+        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+        String inline;
+        String out = "";
+        while ((inline = reader.readLine()) != null){
+            out = out + inline;}
+        return out;
+    }
+
+public String getBodyText() throws Exception{
+        String website = getWebSite();
+        System.out.print(website);
+        String text = getRawText();
+        Document doc = Jsoup.parse(text);
+        if(website.equals("www.rte.ie")){
+           return doc.select("div.body_text").text(); 
+        }
+        else if(website.equals("feeds.guardian.co.uk")){
+            return doc.select("div#article-body-blocks").text();
+        }
+        else if(website.equals("rss.feedsportal.com")){
+            //String top = doc.select("span.top").text();
+            return doc.select("div.body").text(); 
+        }
+        else{return "";}
+        
+}
 	
-	/**
-	 * NewsDocument
-	 * 
-	 * creates a document with the properties provided
-	 * as arguments
-	 * 
-	 * @param t
-	 * @param d
-	 * @param l
-	 * @param a
-	 * @param p
-	 */
-	public NewsDocument( String t, String d, String l, String a, String p ){
-		doc = new Document( );
-		
-		// note: StringField or just Field types may be used here also,
-		// not sure which one is suited better for these fields
-		doc.add( new TextField( "title", t, Field.Store.YES ) );
-		doc.add( new TextField( "description", d, Field.Store.YES ) );
-		doc.add( new TextField( "link", l, Field.Store.YES ) );
-		doc.add( new TextField( "author", a, Field.Store.YES ) );
-		doc.add( new TextField( "date", p, Field.Store.YES ) );
-				
-	}
-	
+ public String getWebSite() throws Exception{
+        return url.getHost().toString();
+    }
 }

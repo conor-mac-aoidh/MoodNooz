@@ -10,7 +10,7 @@ import java.util.Vector;
 
 
 public class QueryBasedSummarizer {
-    private MoodDictionary dictionary;
+   /* private MoodDictionary dictionary;
     public QueryBasedSummarizer(MoodDictionary dictionary){
     this.dictionary = dictionary;
     }
@@ -43,7 +43,7 @@ public class QueryBasedSummarizer {
            }
            else{
                 
-               words.put(j, 0);  
+               words.put(j, "0");  
            }
     }//split the doc into individual sentences and each sentence into words.
         for(Object sentence: docSentences){
@@ -131,7 +131,7 @@ public class QueryBasedSummarizer {
            }
            else{
                 
-               words.put(j, 0);  
+               words.put(j, "0");  
            }
     }
         
@@ -139,7 +139,7 @@ public class QueryBasedSummarizer {
             for(Object key: words.keySet()){
                 String root = dictionary.getRootForm(key.toString());
                 String q = key.toString();
-                if (words.get(key) == 0){
+                if (words.get(key) == "0"){
                     for(String word: sentenceWords){
                         if (word.equals(q) || dictionary.getRootForm(word).equals(root)){
                             score += 10;
@@ -207,5 +207,5 @@ public class QueryBasedSummarizer {
            
            //return the best sentence
            return bestMatch;
-       }
+       }*/
 }

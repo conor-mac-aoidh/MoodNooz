@@ -17,8 +17,6 @@ table tr td.first{ min-width:30% }
 table tr th{ height:30px;text-align:left;padding:2px 6px;color:#fff;font-size:13px;background:url("img/th.png") repeat-x !important }
 .even{ background:#ded }
 .odd{ background:#fff }
-#download-table{ border-width:1px 1px 1px 0;border-color:#999;border-style:solid;padding:0;width:80%;margin:25px 10%;border-spacing:0 }
-#download-table td{ border-left:1px solid #999;padding:7px 9px }
 
 /* template style */
 
@@ -39,6 +37,7 @@ body{ text-align:center }
 #query{ margin:15px }
 #query > *{ display:inline }
 #expanded{ display:none }
+#expanded span{ font-style:italic }
 #footer{ text-align:left;height:27px;width:100% }
 #bottom-wrapper{ text-align:left;color:#115;font-size:13px;border-top:8px solid #039;margin-top:20px }
 #bottom{ width:76%;margin:20px auto }
@@ -47,11 +46,6 @@ body{ text-align:center }
 #bottom h2 a{color:#115;font-weight:bold }
 #bottom a{ color:#115;font-size:13px }
 #bottom p{ color:#000;font-size:13px;margin-left:70px }
-
-.download-link{ background: url(img/download.png);width:200px;height:46px;padding:9px 0 0 18px;margin-top:20px;float:left;color:#fff }
-.download-link p{ color:#fff;text-decoration:underline;line-height:18px!important;padding:0;margin:0 }
-.download-link p:nth-child(1){ font-size:15px }
-.download-link p:nth-child(2){ font-size:11px }
 .ui-tabs-nav{ background:#333 }
 
 /* page contents */

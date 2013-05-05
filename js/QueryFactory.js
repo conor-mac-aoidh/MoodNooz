@@ -20,11 +20,11 @@ var QueryFactory = {
 		
 		// expand query
 		this.expand( query, function( query ){
-
+			console.log( "complete" );
 			// get results from server
-			$.getJSON( "/jsp/query/get.jsp?query=" + query + "&when=" + when, function( results ){
-				QueryFactory.display.apply( QueryFactory, [ results ] );
-			});
+//			$.getJSON( "/jsp/query/get.jsp?query=" + query + "&when=" + when, function( results ){
+//				QueryFactory.display.apply( QueryFactory, [ results ] );
+//			});
 
 		});
 
@@ -50,6 +50,8 @@ var QueryFactory = {
 	 */
 	expand : function( query, callback ){
 		
+		$( "#expanded" ).hide( );
+
 		// get associations for words
 		var terms = query.split( " " );
 		var words = [ ];
@@ -69,14 +71,32 @@ var QueryFactory = {
 		}
 
 		// get associations
-		this.getAssociations( words, affects, function( result ){	
+		this.getAssociations( words, affects, function( associations ){	
 
 			var query = "";
+			var affect = "";
+			var a = 0;
 
-			for( var i in words ){
-				query += words[ i ] + " and ";
-
+			// build expanded query with associations
+			for( var i in terms ){
+				affect = terms[ i ].substr( 0, 1 );
+				if( affect == "-" || affect == "+" ){
+					query += terms[ i ].substr( 1 ) + " and ";
+					query += "( ";
+					query += terms[ i ].substr( 1 ) + " or ";
+					for( var j in associations[ a ] ){
+						query += associations[ a ][ j ] + " or ";
+					}
+					// remove last or
+					query = query.substr( 0, query.length - 3 );
+					query += ") and ";
+					a++;
+				}
+				else
+					query += terms[ i ] + " and ";
 			}
+			// remove last and
+			query = query.substring( 0, query.length - 4 );
 
 			// show expanded query
 			$( "#expanded-query" ).html( query );
@@ -103,9 +123,34 @@ var QueryFactory = {
 		affects = affects.join( "," );
 
 		// get associations of words
-		$.getJSON( "/query/associations.jsp?words=" + words + "&affects=" + affects, function( result ){
+		this.get( "/query/associations.jsp?words=" + words + "&affects=" + affects, function( result ){
 			// exec callback function
 			callback( result );
+		});
+
+	},
+
+	/**
+	 * get
+	 *
+	 * gets a url with error handling
+	 *
+	 * @param string url
+	 * @param func callback
+	 */
+	get : function( url, callback ){
+			
+		// get using JSON
+		$.getJSON( url, function( data ){
+			if( data.response == 0 ){	
+				// exec callback function
+				callback( data.result );
+			}
+			else{
+				$( "#expanded" ).show( );
+				$( "#expanded-query" ).html( "<span style=\"color:red\">There was a problem executing the query. Response: " + data.response + "</span>" );
+			}
+
 		});
 
 	},

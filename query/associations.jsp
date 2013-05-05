@@ -21,8 +21,8 @@
 		String affects[ ] = request.getParameter( "affects" ).split( "," );
 
 		// neg, pos maps
-		AffectMap neg = new AffectMap( MoodNooz.positiveMap );
-		AffectMap pos = new AffectMap( MoodNooz.negativeMap );
+		AffectMap pos = new AffectMap( MoodNooz.positiveMap );
+		AffectMap neg = new AffectMap( MoodNooz.negativeMap );
 
 		// get associations		
 		Vector<String> association = new Vector<String>( );
@@ -30,20 +30,30 @@
 		String w;
 		for( int i = 0; i < words.length; ++i ){
 			w = words[ i ];
-			if( affects[ i ].compareTo( "neg" ) == 0 )
-				associations.add( pos.getAssociationsOfWord( w ) );
-			else if( affects[ i ].compareTo( "pos" ) == 0 )
-				associations.add( neg.getAssociationsOfWord( w ) );
+			if( affects[ i ].compareTo( "neg" ) == 0 ){
+				if( neg.containsWord( w ) )
+					associations.add( neg.getAssociationsOfWord( w ) );
+				else
+					associations.add( new Vector<String>( ) );
+			}
+			else if( affects[ i ].compareTo( "pos" ) == 0 ){
+				if( pos.containsWord( w ) )
+					associations.add( pos.getAssociationsOfWord( w ) );
+				else
+					associations.add( new Vector<String>( ) );
+			}
 		}
 
 		// print output as JSON
 		String output = "{ \"response\" : 0, \"result\" : [";
 		for( Vector<String> v : associations ){	
 			output += "[";
-			for( String s : v ){
-				output += "\"" + s + "\",";
+			if( v.size( ) != 0 ){
+				for( String s : v ){
+					output += "\"" + s + "\",";
+				}
+				output = output.substring( 0, output.length( ) - 1 );
 			}
-			output = output.substring( 0, output.length( ) - 1 );
 			output += "],";
 		}
 		output = output.substring( 0, output.length( ) - 1 );
@@ -53,7 +63,7 @@
 	}
 	// catch and print errors in JSON
 	catch( Exception e ){
-		out.write( "{ \"response\" : 200, \"result\" : \"" + e.getMessage( ) + "\" }" );
+		out.write( "{ \"response\" : 200, \"result\" : \"Associations retrieval failed: " + e.getMessage( ) + "\" }" );
 	}
 	
 

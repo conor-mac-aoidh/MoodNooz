@@ -14,7 +14,7 @@ Windows: 	./tomcat/bin/startup.bat
 
 Similarily to shutdown:
 	
-Unix: 		./tomcat/bin/shutdown.bat
+Unix: 		./tomcat/bin/shutdown.sh
 Windows: 	./tomcat/bin/shutdown.bat	
 
 The project should then be accessible by accessing http://localhost:8080 in a web browser.

@@ -17,8 +17,6 @@ table tr td.first{ min-width:30% }
 table tr th{ height:30px;text-align:left;padding:2px 6px;color:#fff;font-size:13px;background:url("img/th.png") repeat-x !important }
 .even{ background:#ded }
 .odd{ background:#fff }
-#download-table{ border-width:1px 1px 1px 0;border-color:#999;border-style:solid;padding:0;width:80%;margin:25px 10%;border-spacing:0 }
-#download-table td{ border-left:1px solid #999;padding:7px 9px }
 
 /* template style */
 
@@ -38,7 +36,17 @@ body{ text-align:center }
 #main{ text-align:left;margin:25px auto;width:94%;border-top:1px solid transparent }
 #query{ margin:15px }
 #query > *{ display:inline }
-#expanded{ display:none }
+#slider{ position:relative;width:1000px;height:50px;overflow-x:hidden;overflow-y:hidden;margin:0 auto;margin-top:40px;border:1px solid #bbb }
+#results{ position:absolute;padding:15px 25px;top:0;left:0;width:948px }
+#page{ padding:15px 25px;position:absolute;left:1000px;width:1001px;border-left:1px solid #bbb }
+.entry{ margin: 20px 0; }
+.entry h3{ font-weight:bold }
+.entry span{ font-style:italic }
+.entry p{ }
+#expanded{ display:none;position:relative;height:18px;overflow-y:hidden }
+#expanded span{ font-style:italic }
+#see-more{ position:absolute;right:0;top:0;font-weight:bold;background:#fff;padding-left:2px;text-decoration:underline;cursor:pointer }
+.article, .return{ cursor:pointer }
 #footer{ text-align:left;height:27px;width:100% }
 #bottom-wrapper{ text-align:left;color:#115;font-size:13px;border-top:8px solid #039;margin-top:20px }
 #bottom{ width:76%;margin:20px auto }
@@ -47,11 +55,6 @@ body{ text-align:center }
 #bottom h2 a{color:#115;font-weight:bold }
 #bottom a{ color:#115;font-size:13px }
 #bottom p{ color:#000;font-size:13px;margin-left:70px }
-
-.download-link{ background: url(img/download.png);width:200px;height:46px;padding:9px 0 0 18px;margin-top:20px;float:left;color:#fff }
-.download-link p{ color:#fff;text-decoration:underline;line-height:18px!important;padding:0;margin:0 }
-.download-link p:nth-child(1){ font-size:15px }
-.download-link p:nth-child(2){ font-size:11px }
 .ui-tabs-nav{ background:#333 }
 
 /* page contents */

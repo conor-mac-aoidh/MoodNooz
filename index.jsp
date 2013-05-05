@@ -16,11 +16,19 @@
 <!-- End Search Box Conatiner -->
 
 <div id="expanded">
-	<strong>Expanded Query: </strong><span id="expanded-query"></span>
+	<strong>Expanded Query: </strong><span id="expanded-query"></span><span id="see-more"> Show</span>
 </div>
 
-<!-- Search Results -->
-<div id="results"></div>
-<!-- End Search Results -->
+<!-- Search Results Slider -->
+<div id="slider">
+	<div id="results"><i>Enter a search query above</i></div>
+	<div id="page">
+		<a class="return">Back to search results</a>
+		<div class="entry">
+		</div>
+		<br style="clear:both"/>
+	</div>
+</div>
+<!-- End Search Results Slider -->
 
 <%@include file="footer.jsp"%>

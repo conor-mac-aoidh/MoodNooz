@@ -43,6 +43,7 @@ body{ text-align:center }
 .entry h3{ font-weight:bold }
 .entry span{ font-style:italic }
 .entry p{ }
+#content{ margin:10px 0;width:940px }
 #expanded{ display:none;position:relative;height:18px;overflow-y:hidden }
 #expanded span{ font-style:italic }
 #see-more{ position:absolute;right:0;top:0;font-weight:bold;background:#fff;padding-left:2px;text-decoration:underline;cursor:pointer }

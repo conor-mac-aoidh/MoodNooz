@@ -25,7 +25,7 @@
 		ScoreDoc[ ] hits = s.search( "irish", "body" );
 		Document doc;
 		int docId;
-		String link, desc;
+		String link, desc, body;
 
 		// print output as JSON
 		String output = "{ \"response\" : 0, \"result\" : [";
@@ -33,17 +33,19 @@
 			docId = d.doc;
 			doc = s.get( docId );
 			desc = doc.get( "description" ).replace("\"","\\\"");
+			body = doc.get( "body" ).replace("\"","\\\"");
 			output += "{";
 			output += "\"id\":\"" + docId + "\",";
 			output += "\"title\":\"" + doc.get( "title" ) + "\",";
 			output += "\"link\":\"" + doc.get( "link" ) + "\",";
 			output += "\"score\":\"" + doc.get( "score" ) + "\",";
+			output += "\"body\":\"" + body + "\",";
 			output += "\"description\":\"" + desc + "\"";
 			output += "},";
 		}
 		output = output.substring( 0, output.length( ) - 1 );
 		output += "]}";
-		out.write( output );
+		out.write( output.replace( "\n", "<br/>" ).replaceAll(" +", " ") );
 
 	}
 	// catch and print errors in JSON

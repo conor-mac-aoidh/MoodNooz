@@ -53,14 +53,14 @@ public String getBodyText() throws Exception{
         String text = getRawText();
         Document doc = Jsoup.parse(text);
         if(website.equals("www.rte.ie")){
-           return doc.select("div.body_text").text(); 
+           return doc.select("div.body_text").html(); 
         }
         else if(website.equals("feeds.guardian.co.uk")){
-            return doc.select("div#article-body-blocks").text();
+            return doc.select("div#article-body-blocks").html();
         }
         else if(website.equals("rss.feedsportal.com")){
             //String top = doc.select("span.top").text();
-            return doc.select("div.body").text(); 
+            return doc.select("div.body").html(); 
         }
         else{return "";}
         

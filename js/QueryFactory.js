@@ -38,20 +38,19 @@ var QueryFactory = {
 	 * @param object results
 	 */
 	display : function( results ){
-		console.log( results );
-
+		
 		// display formatted results
 		var doc, out = "";
 		for( var i in results ){
 			out += "<div class=\"entry\">";
-			out += "<h3><a href=" + results[ i ].link + ">" + results[ i ].title + "</a><h3>";
+			out += "<h3><a class=\"article\" id=\"article-" + results[ i ].id + "\">" + results[ i ].title + "</a><h3>";
 			out += "<span>Date:</span>";
 			out += "<p>" + results[ i ].description + "</p>";
 			out += "</div>";
 		}
-
+		
 		$( "#results" ).html( out );
-
+		$( "#slider" ).animate({ height : parseInt( $( "#results" ).css( "height" ) ) + 20 + "px" }, 1000 );
 	},
 
 	/**

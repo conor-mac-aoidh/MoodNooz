@@ -8,6 +8,13 @@
 var QueryFactory = {
 
 	/**
+	 * results
+	 *
+	 * holds list of results fetched from server
+	 */
+	results : [ ],
+
+	/**
 	 * exec
 	 *
 	 * fetches a query from the server
@@ -17,11 +24,13 @@ var QueryFactory = {
 		// get query info
 		var query = $( "#query-input" ).val( );
 		var when = $( "#query-form select" ).val( );
+		this.results = [ ];
 		
 		// expand query
 		this.expand( query, function( query ){
 			// get results from server
 			QueryFactory.get( "/query/search.jsp?query=" + query + "&when=" + when, function( results ){
+				QueryFactory.results = results;
 				QueryFactory.display.apply( QueryFactory, [ results ] );
 			});
 
@@ -155,7 +164,10 @@ var QueryFactory = {
 		$.ajax({
 			url : url,
 			dataType : "json",
-			error : function( ){	
+			error : function( jqXHR, textStatus, errorThrown ){
+				console.log( jqXHR );
+				console.log( textStatus );
+				console.log( errorThrown );
 				$( "#expanded" ).show( );
 				$( "#expanded-query" ).html( "<span style=\"color:red\">An error has occured fetching the query.</span>" );
 			},
@@ -172,5 +184,19 @@ var QueryFactory = {
 		});
 
 	},
+
+
+	/**
+	 * getResult
+	 *
+	 * gets a page by its id from the results list
+	 */
+	getResult : function( id ){
+		for( var i in this.results ){
+			if( this.results[ i ].id == id )
+				return this.results[ i ];
+		}
+		return null;
+	}
 
 };

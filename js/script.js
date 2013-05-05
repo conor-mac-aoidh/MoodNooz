@@ -24,7 +24,8 @@ $(function(){
 
 	// events
 	$( ".article" ).live( "click", function( ){
-		// load page by id
+		var id = $( this ).attr( "id" ).split( "-" )[ 1 ];
+		load_page( id );
 		$( "#page" ).css( "left", "1000px" );
 		$( "#slider" ).animate({ "height" : parseInt( $( "#page" ).css( "height" ) ) + 20 + "px" }, 1500 );
 		$( "#results" ).animate({ "left" : "-1000px" }, 1500 );
@@ -32,7 +33,6 @@ $(function(){
 	});
 
 	$( ".return" ).live( "click", function( ){
-		// load page by id
 		$( "#slider" ).animate({ "height" : parseInt( $( "#results" ).css( "height" ) ) + 20 + "px" }, 1500 );
 		$( "#results" ).animate({ "left" : 0 }, 1500 );
 		$( "#page" ).animate({ "left" : "1001px" }, 1500 );
@@ -47,3 +47,21 @@ $(function(){
 		});
 	});
 });
+
+/**
+ * load_page
+ *
+ * loads a page by its id
+ *
+ * @param int id
+ */
+function load_page( id ){
+
+	var page = QueryFactory.getResult( id );
+
+	$( "#page .entry" ).html(
+		"<h1>" + page.title + "</h1>" +
+		"<p><i><a href=\"" + page.url + "\">" + page.link + "</a></i></p>"+
+		"<div id=\"content\">" + page.body + "</div>"
+	);
+}

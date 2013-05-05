@@ -1,6 +1,5 @@
 package core;
 
-
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.StringField;
@@ -26,7 +25,6 @@ public class LuceneDocument {
 	}
 	
 	public Document getLuceneDoc(){
-		
             doc = new Document();
             
             doc.add(new TextField("title", title, Field.Store.YES));

@@ -1,5 +1,7 @@
 <%@page 
 	import="java.util.*"
+	import="org.apache.lucene.document.Document"
+	import="org.apache.lucene.search.ScoreDoc"
 	import="core.MoodNooz"
 	import="core.LuceneSearcher;"
 %>
@@ -20,19 +22,24 @@
 		String when = request.getParameter( "when" );
 		
 		LuceneSearcher s = new LuceneSearcher( );
-		ScoreDoc[ ] hits = s.search( 
+		ScoreDoc[ ] hits = s.search( "irish", "body" );
+		Document doc;
+		int docId;
+		String link, desc;
 
 		// print output as JSON
 		String output = "{ \"response\" : 0, \"result\" : [";
-		for( Vector<String> v : associations ){	
-			output += "[";
-			if( v.size( ) != 0 ){
-				for( String s : v ){
-					output += "\"" + s + "\",";
-				}
-				output = output.substring( 0, output.length( ) - 1 );
-			}
-			output += "],";
+		for( ScoreDoc d : hits ){
+			docId = d.doc;
+			doc = s.get( docId );
+			desc = doc.get( "description" ).replace("\"","\\\"");
+			output += "{";
+			output += "\"id\":\"" + docId + "\",";
+			output += "\"title\":\"" + doc.get( "title" ) + "\",";
+			output += "\"link\":\"" + doc.get( "link" ) + "\",";
+			output += "\"score\":\"" + doc.get( "score" ) + "\",";
+			output += "\"description\":\"" + desc + "\"";
+			output += "},";
 		}
 		output = output.substring( 0, output.length( ) - 1 );
 		output += "]}";

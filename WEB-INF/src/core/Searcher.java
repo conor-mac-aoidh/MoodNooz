@@ -29,7 +29,7 @@ public class Searcher {
 	 * @return
 	 */
 	public static void query( String query, String when ){
-		
+
 	}
 		
 }

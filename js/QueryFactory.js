@@ -20,11 +20,10 @@ var QueryFactory = {
 		
 		// expand query
 		this.expand( query, function( query ){
-			console.log( "complete" );
 			// get results from server
-//			$.getJSON( "/jsp/query/get.jsp?query=" + query + "&when=" + when, function( results ){
-//				QueryFactory.display.apply( QueryFactory, [ results ] );
-//			});
+			QueryFactory.get( "/query/search.jsp?query=" + query + "&when=" + when, function( results ){
+				QueryFactory.display.apply( QueryFactory, [ results ] );
+			});
 
 		});
 
@@ -39,7 +38,20 @@ var QueryFactory = {
 	 * @param object results
 	 */
 	display : function( results ){
-		// @todo
+		console.log( results );
+
+		// display formatted results
+		var doc, out = "";
+		for( var i in results ){
+			out += "<div class=\"entry\">";
+			out += "<h3><a href=" + results[ i ].link + ">" + results[ i ].title + "</a><h3>";
+			out += "<span>Date:</span>";
+			out += "<p>" + results[ i ].description + "</p>";
+			out += "</div>";
+		}
+
+		$( "#results" ).html( out );
+
 	},
 
 	/**
@@ -141,16 +153,23 @@ var QueryFactory = {
 	get : function( url, callback ){
 			
 		// get using JSON
-		$.getJSON( url, function( data ){
-			if( data.response == 0 ){	
-				// exec callback function
-				callback( data.result );
-			}
-			else{
+		$.ajax({
+			url : url,
+			dataType : "json",
+			error : function( ){	
 				$( "#expanded" ).show( );
-				$( "#expanded-query" ).html( "<span style=\"color:red\">There was a problem executing the query. Response: " + data.response + "</span>" );
+				$( "#expanded-query" ).html( "<span style=\"color:red\">An error has occured fetching the query.</span>" );
+			},
+			success : function( data ){
+				if( data.response == 0 ){	
+					// exec callback function
+					callback( data.result );
+				}
+				else{
+					$( "#expanded" ).show( );
+					$( "#expanded-query" ).html( "<span style=\"color:red\">There was a problem executing the query. Response: " + data.result + "</span>" );
+				}
 			}
-
 		});
 
 	},

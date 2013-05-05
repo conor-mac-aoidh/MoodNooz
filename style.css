@@ -36,6 +36,10 @@ body{ text-align:center }
 #main{ text-align:left;margin:25px auto;width:94%;border-top:1px solid transparent }
 #query{ margin:15px }
 #query > *{ display:inline }
+.entry{ margin: 20px 0; }
+.entry h3{ font-weight:bold }
+.entry span{ font-style:italic }
+.entry p{ }
 #expanded{ display:none }
 #expanded span{ font-style:italic }
 #footer{ text-align:left;height:27px;width:100% }

@@ -5,6 +5,7 @@
 package core;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -54,6 +55,11 @@ public class LuceneSearcher {
 			return new QueryParser(Version.LUCENE_42, field, analyzer).parse(q);
 		}catch(Exception e){e.printStackTrace();}
 		return null;
+	}
+	
+	// returns a Document given an id
+	public Document get( int docId ) throws IOException	{
+		return searcher.doc( docId );
 	}
 	
 	//print results

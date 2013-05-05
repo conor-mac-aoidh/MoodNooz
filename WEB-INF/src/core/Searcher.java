@@ -1,6 +1,10 @@
 package core;
 
+import java.util.ArrayList;
+
 public class Searcher {
+    
+        
 	
 	/**
 	 * query
@@ -28,8 +32,18 @@ public class Searcher {
 	 * @param when
 	 * @return
 	 */
-	public static void query( String query, String when ){
+	public String query( String query, String when ){
+            
+            ArrayList nested = new ArrayList();
+            return query;
+            
+            
 
 	}
+        
+        public static void main( String [ ] args ){
+            Searcher s = new Searcher();
+            System.out.println(s.query("london and car and ( car or cruise)","now"));
+        }
 		
 }

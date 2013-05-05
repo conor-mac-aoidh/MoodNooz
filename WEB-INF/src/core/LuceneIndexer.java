@@ -57,7 +57,7 @@ public class LuceneIndexer {
         }
     }
     
-    public void removeDuplicates(){
+    public void RemoveDuplicates(){
             
             //to do
         }

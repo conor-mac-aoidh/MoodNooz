@@ -70,7 +70,7 @@ public class LuceneSearcher {
 			    int docId = hits[i].doc;
 			    float score = hits[i].score;			 
 			    Document d = searcher.doc(docId);			    
-			    System.out.println((i + 1) + ". " + d.get("link") + "\t" + d.get("title")+" --- "+score);
+			    System.out.println((i + 1) + d.get("pubdate")+ ". " + d.get("link") + "\t" + d.get("title")+" --- "+score);
 			}	
 		}catch(Exception e){e.printStackTrace();}
 	}

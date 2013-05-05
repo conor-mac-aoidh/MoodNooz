@@ -75,7 +75,7 @@ public class Test {
         public static void SearchTest(){
             LuceneSearcher searcher = new LuceneSearcher();
 		
-		searcher.printHits(searcher.search("Labour", "title"));
+		searcher.printHits(searcher.search("car", "body"));
         }
 	public static void AffectMapTest( ){
 		

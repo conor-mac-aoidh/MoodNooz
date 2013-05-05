@@ -57,7 +57,7 @@ public class RSSReader{
 		Document doc = builder.parse( feed.openStream( ) );
 		NodeList nodes = doc.getElementsByTagName( "item" );
 		Element element;
-		String t, d, l, b, p;
+		String t, d, l, b, p, h;
 		
 		for( int i = 0; i < nodes.getLength( ); ++i ){
 			element = (Element) nodes.item( i );
@@ -69,8 +69,10 @@ public class RSSReader{
                         NewsDocument nd = new NewsDocument(l);
                         b = nd.getBodyText();
                         if(b.equals("")){continue;}
+                        h = nd.getWebSite();
+                        //System.out.println(h);
                         System.out.println(b);
-			this.entries.add( new LuceneDocument( t, d, l, p, b ) );
+			this.entries.add( new LuceneDocument( t, d, l, p, b, h ));
 		}
 	}
 	

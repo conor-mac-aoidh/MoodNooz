@@ -23,7 +23,7 @@
 <div id="slider">
 	<div id="results"><i>Enter a search query above</i></div>
 	<div id="page">
-		<a class="return">Back to search results</a>
+		<a class="return"><-- Back to search results</a>
 		<div class="entry">
 		</div>
 		<br style="clear:both"/>

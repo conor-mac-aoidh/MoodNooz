@@ -5,10 +5,10 @@
 <form id="query-form">
 	<input id="query-input" type="text" name="Search" value="" style="width:65%"/>
 	<select name="when" style="width:20%">
-		<option>Today</option>
-		<option>This Week</option>
-		<option>This Month</option>
-		<option>This Year</option>
+		<option value="today">Today</option>
+		<option value="week">This Week</option>
+		<option value="month">This Month</option>
+		<option value="year">This Year</option>
 	</select>
 	<input id="query-submit" type="submit" name="go" value="Go" style="width:13%"/>
 </form>
@@ -21,6 +21,9 @@
 
 <!-- Search Results Slider -->
 <div id="slider">
+  	<div id="loader">
+		<img src="/img/ajax-loader.gif" />
+	</div>
 	<div id="results"><i>Enter a search query above</i></div>
 	<div id="page">
 		<a class="return"><-- Back to search results</a>

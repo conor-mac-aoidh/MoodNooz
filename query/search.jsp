@@ -3,7 +3,7 @@
 	import="org.apache.lucene.document.Document"
 	import="org.apache.lucene.search.ScoreDoc"
 	import="core.MoodNooz"
-	import="core.LuceneSearcher;"
+	import="core.Searcher;"
 %>
 <%	
 
@@ -21,8 +21,8 @@
 		String query = request.getParameter( "query" );
 		String when = request.getParameter( "when" );
 		
-		LuceneSearcher s = new LuceneSearcher( );
-		ScoreDoc[ ] hits = s.search( "irish", "body" );
+		Searcher s = new Searcher( );
+		ScoreDoc[ ] hits = s.query( query, when );
 		Document doc;
 		int docId;
 		String link, desc, body;

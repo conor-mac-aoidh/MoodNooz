@@ -65,3 +65,22 @@ function load_page( id ){
 		"<div id=\"content\">" + page.body + "</div>"
 	);
 }
+
+
+/**
+ * loading_anim
+ *
+ * start/stop loading animation
+ *
+ * @param string anim
+ */
+function loading_anim( anim ){
+	if( anim == "end" ){
+		$( "#loader" ).hide( );
+		$( "#slider" ).css( "opacity", 1 );
+	}
+	else {
+		$( "#loader" ).show( );
+		$( "#slider" ).css( "opacity", 0.7 );
+	}
+}

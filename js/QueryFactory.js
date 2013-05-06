@@ -159,19 +159,20 @@ var QueryFactory = {
 	 * @param func callback
 	 */
 	get : function( url, callback ){
-			
+
+		loading_anim( "start" );
+
 		// get using JSON
 		$.ajax({
 			url : url,
 			dataType : "json",
 			error : function( jqXHR, textStatus, errorThrown ){
-				console.log( jqXHR );
-				console.log( textStatus );
-				console.log( errorThrown );
+				loading_anim( "end" );
 				$( "#expanded" ).show( );
 				$( "#expanded-query" ).html( "<span style=\"color:red\">An error has occured fetching the query.</span>" );
 			},
 			success : function( data ){
+				loading_anim( "end" );
 				if( data.response == 0 ){	
 					// exec callback function
 					callback( data.result );

@@ -51,7 +51,7 @@ public class LuceneDocument {
             }
             Date date = new SimpleDateFormat("dd MMM yyyy hh:mm:ss",Locale.ENGLISH).parse(d);
             String luceneDate = DateTools.dateToString(date,DateTools.Resolution.HOUR);
-            System.out.println(luceneDate);
+            //System.out.println(luceneDate);
             return luceneDate;
         }
 	
@@ -62,7 +62,7 @@ public class LuceneDocument {
 	    doc.add(new TextField("description", description, Field.Store.YES));
 	    doc.add(new StringField("link", link, Field.Store.YES));
             //doc.add(new TextField("creator", creator, Field.Store.YES));
-            doc.add(new StringField("pubdate", pubdate, Field.Store.YES));
+            doc.add(new StringField("pubdate", pubdate, Field.Store.YES ));
             doc.add(new TextField("body", body, Field.Store.YES));
             doc.add(new StringField("host", host, Field.Store.YES));
             

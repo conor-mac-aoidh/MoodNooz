@@ -25,7 +25,7 @@ public class Indexer {
             try {
                 reader.fetch("http://www.rte.ie/news/rss/news-headlines.xml");
                 reader.fetch("http://feeds.guardian.co.uk/theguardian/rss");
-                //reader.fetch("http://rss.feedsportal.com/c/266/f/3492/index.rss");
+                reader.fetch("http://rss.feedsportal.com/c/266/f/3492/index.rss");
             } catch (ParserConfigurationException ex) {
                 Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SAXException ex) {
@@ -34,7 +34,7 @@ public class Indexer {
                 Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
             }
             System.out.println(reader.entries.size());
-            LuceneIndexer indexer = new LuceneIndexer(true);
+            LuceneIndexer indexer = new LuceneIndexer(false);
             for(LuceneDocument doc:RSSentries){
                 indexer.AddDoc(doc);
             }

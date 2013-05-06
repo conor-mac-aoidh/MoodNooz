@@ -1,5 +1,6 @@
 package core;
 
+import java.io.IOException;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.document.DateTools;
 import org.apache.lucene.search.BooleanQuery;
@@ -8,11 +9,13 @@ import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopScoreDocCollector;
+import org.apache.lucene.document.Document;
 import java.util.Date;
+import net.sf.json.util.JSONUtils;
 
 public class Searcher extends LuceneSearcher{
 
-	public ScoreDoc[] search(BooleanQuery q) {
+	public ScoreDoc[] search(BooleanQuery q){
 		ScoreDoc[] hits = null;
 		collector = TopScoreDocCollector.create(hitsPerPage, true);
 		try {
@@ -113,6 +116,32 @@ public class Searcher extends LuceneSearcher{
 		System.out.println(b);
 
 		return this.search(booleanQuery);
+	}
+
+	/**
+	 * serialize
+	 *
+	 * serialize a score doc object to JSON
+	 *
+	 * @param ScoreDoc[ ] hits
+	 * @return String
+	 */
+	public String serialize( ScoreDoc[ ] hits ) throws IOException{
+		String output = "[";
+		Document doc;
+		for( ScoreDoc d : hits ){
+			doc = this.get( d.doc );
+			output += "{";
+			output += "\"id\":\"" + d.doc + "\",";
+			output += "\"title\":" + JSONUtils.quote( doc.get( "title" ) ) + ",";
+			output += "\"link\":" + JSONUtils.quote( doc.get( "link" ) ) + ",";
+			output += "\"score\":" + JSONUtils.quote( doc.get( "score" ) ) + ",";
+			output += "\"body\":" + JSONUtils.quote( doc.get( "body" ) ) + ",";
+			output += "\"description\":" + JSONUtils.quote( doc.get( "description" ) );
+			output += "},";
+		}
+		output = output.substring( 0, output.length( ) - 1 ) + "]";
+		return output;
 	}
 
 	public static void main(String[] args) {

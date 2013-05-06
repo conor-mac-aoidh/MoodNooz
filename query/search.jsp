@@ -1,6 +1,6 @@
+<%@ page language="java" contentType="application/json; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@page 
 	import="java.util.*"
-	import="org.apache.lucene.document.Document"
 	import="org.apache.lucene.search.ScoreDoc"
 	import="core.MoodNooz"
 	import="core.Searcher;"
@@ -23,29 +23,10 @@
 		
 		Searcher s = new Searcher( );
 		ScoreDoc[ ] hits = s.query( query, when );
-		Document doc;
-		int docId;
-		String link, desc, body;
+		String output = s.serialize( hits );
 
 		// print output as JSON
-		String output = "{ \"response\" : 0, \"result\" : [";
-		for( ScoreDoc d : hits ){
-			docId = d.doc;
-			doc = s.get( docId );
-			desc = doc.get( "description" ).replace("\"","\\\"");
-			body = doc.get( "body" ).replace("\"","\\\"");
-			output += "{";
-			output += "\"id\":\"" + docId + "\",";
-			output += "\"title\":\"" + doc.get( "title" ) + "\",";
-			output += "\"link\":\"" + doc.get( "link" ) + "\",";
-			output += "\"score\":\"" + doc.get( "score" ) + "\",";
-			output += "\"body\":\"" + body + "\",";
-			output += "\"description\":\"" + desc + "\"";
-			output += "},";
-		}
-		output = output.substring( 0, output.length( ) - 1 );
-		output += "]}";
-		out.write( output.replace( "\n", "<br/>" ).replaceAll(" +", " ") );
+		out.write( "{ \"response\" : 0, \"result\" : " + output + "}" );
 
 	}
 	// catch and print errors in JSON

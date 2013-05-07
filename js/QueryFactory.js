@@ -13,6 +13,10 @@ var QueryFactory = {
 	 * holds list of results fetched from server
 	 */
 	results : [ ],
+	positive : [ ],
+	negative : [ ],
+	words : [ ],
+	query : "",
 
 	/**
 	 * exec
@@ -27,7 +31,8 @@ var QueryFactory = {
 		var query = $( "#query-input" ).val( );
 		var when = $( "#query-form select" ).val( );
 		this.results = [ ];
-		
+		this.query = query;
+
 		// expand query
 		this.expand( query, function( query ){
 			// get results from server
@@ -49,7 +54,7 @@ var QueryFactory = {
 	 * @param object results
 	 */
 	display : function( results ){
-	
+
 		// no results found
 		if( results.length == 0 ){
 			out = "<h1>No Results Found</h1>";
@@ -61,13 +66,45 @@ var QueryFactory = {
 				out += "<div class=\"entry\">";
 				out += "<h3 class=\"header\"><span class=\"date\">" + results[ i ].date + "</span>";
 				out += "<a class=\"article\" id=\"article-" + results[ i ].id + "\">" + results[ i ].title + ", " + results[ i ].host + "</a></h3>";
-				out += "<p>" + results[ i ].description + "</p>";
+				out += "<p>" + this.highlight( results[ i ].description ) + "</p>";
 				out += "</div>";
 			}
 		}
-		
+
 		$( "#results" ).html( out );
 		$( "#slider" ).animate({ height : parseInt( $( "#results" ).css( "height" ) ) + 20 + "px" }, 1000 );
+	},
+
+	/**
+	 * highlight
+	 *
+	 * highlights a string
+	 *
+	 * @param string content
+	 * @return string
+	 */
+	highlight : function( content ){
+		
+		// parse output, show highlighting
+		this.query = ( this.query.indexOf( " " ) === -1 ) ? [ this.query ] : this.query.split( " " );
+		for( var i in this.query ){
+			content = content.replace( this.query[ i ], "<span class=\"search-term\">" + this.query[ i ] + "</span>" );
+		}
+		
+		for( var i in this.words ){
+			content = content.replace( this.words[ i ], "<span class=\"search-term\">" + this.words[ i ] + "</span>" );
+		}
+		
+		for( var i in this.positive ){
+			content = content.replace( this.positive[ i ], "<span class=\"positive\">" + this.positive[ i ] + "</span>" );
+		}
+		
+		for( var i in this.negative ){
+			content = content.replace( this.negative[ i ], "<span class=\"negative\">" + this.negative[ i ] + "</span>" );
+		}
+
+		return content;
+
 	},
 
 	/**
@@ -80,24 +117,24 @@ var QueryFactory = {
 		
 		// get associations for words
 		var terms = query.split( " " );
-		var words = [ ];
+		this.words = this.positive = this.negative = [ ];
 		var affects = [ ], affect;
 
 		for( var i in terms ){
 			affect = terms[ i ].substr( 0, 1 );
 			if( affect == "-" || affect == "+" ){
 				affects.push( ( affect == "+" ) ? "pos" : "neg" );
-				words.push( terms[ i ].substr( 1 ) );
+				this.words.push( terms[ i ].substr( 1 ) );
 			}
 		}
 
 		// if no words, call callback
-		if( words.length == 0 ){
+		if( this.words.length == 0 ){
 			return callback( query );
 		}
 
 		// get associations
-		this.getAssociations( words, affects, function( associations ){	
+		this.getAssociations( this.words, affects, function( associations ){	
 
 			var query = "";
 			var affect = "";
@@ -108,14 +145,23 @@ var QueryFactory = {
 				affect = terms[ i ].substr( 0, 1 );
 				if( affect == "-" || affect == "+" ){
 					query += terms[ i ].substr( 1 ) + " and ";
-					query += "( ";
-					query += terms[ i ].substr( 1 ) + " or ";
-					for( var j in associations[ a ] ){
-						query += associations[ a ][ j ] + " or ";
+					if( associations[ a ].length == 0 ){
+						query += terms[ i ].substr( 1 );
 					}
-					// remove last or
-					query = query.substr( 0, query.length - 3 );
-					query += ") and ";
+					else{
+						if( affect == "-" )
+							QueryFactory.negative.push( associations[ a ] );
+						else
+							QueryFactory.positive.push( associations[ a ] );
+						query += "( ";
+						query += terms[ i ].substr( 1 ) + " or ";
+						for( var j in associations[ a ] ){
+							query += associations[ a ][ j ] + " or ";
+						}
+						// remove last or
+						query = query.substr( 0, query.length - 3 ) + ")";
+					}
+					query += " and ";
 					a++;
 				}
 				else

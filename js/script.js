@@ -62,7 +62,7 @@ function load_page( id ){
 	$( "#page .entry" ).html(
 		"<h1>" + page.title + "</h1>" +
 		"<p><i><a href=\"" + page.url + "\">" + page.link + "</a></i></p>"+
-		"<div id=\"content\">" + page.body + "</div>"
+		"<div id=\"content\">" + QueryFactory.highlight( page.body ) + "</div>"
 	);
 }
 

@@ -43,6 +43,9 @@ body{ text-align:center }
 .entry h3{ font-weight:bold }
 .entry span{ font-style:italic }
 .entry p{ }
+.positive{ color:green;font-weight:bold }
+.negative{ color:red;font-weight:bold }
+.search-term{ color:yellow;font-weight:bold }
 #loader{ display:none }
 #loader img{ left:45%;position:absolute;top:45%;z-index:9999999; }
 .header{ background:#039;padding:6px 15px;margin-bottom:5px }

@@ -31,7 +31,8 @@
 	}
 	// catch and print errors in JSON
 	catch( Exception e ){
-		out.write( "{ \"response\" : 200, \"result\" : \"Associations retrieval failed: " + e.getMessage( ) + "\" }" );
+		out.write( "{ \"response\" : 200, \"result\" : \"Search failed: " + e.getMessage( ) + "\" }" );
+		e.printStackTrace( );
 	}
 	
 

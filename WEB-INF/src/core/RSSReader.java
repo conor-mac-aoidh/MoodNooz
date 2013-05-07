@@ -11,7 +11,10 @@ package core;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -58,19 +61,17 @@ public class RSSReader{
 		NodeList nodes = doc.getElementsByTagName( "item" );
 		Element element;
 		String t, d, l, b, p, h;
-		
 		for( int i = 0; i < nodes.getLength( ); ++i ){
 			element = (Element) nodes.item( i );
                         t=element.getElementsByTagName("title").item(0).getTextContent();
-			d=element.getElementsByTagName("description").item(0).getTextContent();
+                        d=element.getElementsByTagName("description").item(0).getTextContent();
                         l=element.getElementsByTagName("link").item(0).getTextContent();
                         p=element.getElementsByTagName("pubDate").item(0).getTextContent();
-                        
                         NewsDocument nd = new NewsDocument(l);
                         b = nd.getBodyText();
                         if(b.equals("")){continue;}
                         h = nd.getWebSite();
-                        //System.out.println(h);
+                        //System.out.println(p);
                         System.out.println(b);
 			this.entries.add( new LuceneDocument( t, d, l, p, b, h ));
 		}

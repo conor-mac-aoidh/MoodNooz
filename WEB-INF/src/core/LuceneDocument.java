@@ -1,5 +1,6 @@
 package core;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -34,7 +35,7 @@ public class LuceneDocument {
 	}
         
         private String ConvertDate(String d) throws ParseException{
-            String timezone;
+   /*         String timezone;
             if(d.charAt(d.length()-1) == 'T'){
                 timezone = "G";
             }
@@ -48,21 +49,28 @@ public class LuceneDocument {
             }
             else{
                 d=d.substring(5, 25);
-            }
-            Date date = new SimpleDateFormat("dd MMM yyyy hh:mm:ss",Locale.ENGLISH).parse(d);
+            }*/
+            Date date = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz",Locale.ENGLISH).parse(d);
             String luceneDate = DateTools.dateToString(date,DateTools.Resolution.HOUR);
-            //System.out.println(luceneDate);
+            System.out.println(luceneDate);
             return luceneDate;
         }
 	
-	public Document getLuceneDoc(){
+	public Document getLuceneDoc() throws Exception{
             doc = new Document();
             
             doc.add(new TextField("title", title, Field.Store.YES));
-	    doc.add(new TextField("description", description, Field.Store.YES));
-	    doc.add(new StringField("link", link, Field.Store.YES));
-            //doc.add(new TextField("creator", creator, Field.Store.YES));
-            doc.add(new StringField("pubdate", pubdate, Field.Store.YES ));
+            doc.add(new TextField("description", description, Field.Store.YES));
+            doc.add(new StringField("link", link, Field.Store.YES));
+
+            // attempt to format date
+            try{
+	            doc.add(new Field("pubdate",
+	                    this.ConvertDate( pubdate ),
+	                    Field.Store.YES, Field.Index.NOT_ANALYZED));
+            } catch( Exception e ){
+            	doc.add(new TextField("pubdate", pubdate, Field.Store.YES ));
+            }
             doc.add(new TextField("body", body, Field.Store.YES));
             doc.add(new StringField("host", host, Field.Store.YES));
             

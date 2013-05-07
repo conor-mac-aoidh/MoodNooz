@@ -42,10 +42,13 @@ public class LuceneIndexer {
         
     }
     
-    public void AddDoc(LuceneDocument doc) throws IOException{
+    public void AddDoc(LuceneDocument doc) throws Exception{
         if(doc != null){
             Document luceneDoc = doc.getLuceneDoc();
             writer.addDocument(luceneDoc);
+        }
+        else{
+        	System.out.println( "[EMPTY DOC]" );
         }
     }
     

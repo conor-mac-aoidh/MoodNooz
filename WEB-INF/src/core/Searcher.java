@@ -10,6 +10,8 @@ import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.document.Document;
+import org.jsoup.Jsoup;
+
 import java.util.Date;
 import net.sf.json.util.JSONUtils;
 
@@ -63,7 +65,7 @@ public class Searcher extends LuceneSearcher{
 
 		String[] terms = query.split(" and ");
 		for (String s : terms) {
-			// System.out.println(s);
+			 System.out.println( "outer: " + s);
 			if (s.charAt(0) == '(') {
 				BooleanQuery innerQuery = new BooleanQuery();
 				s = s.substring(2, s.length() - 2);
@@ -71,7 +73,7 @@ public class Searcher extends LuceneSearcher{
 				for (String i : inner) {
 					booleanQuery.add(new TermQuery(new Term("body", i)),
 							BooleanClause.Occur.SHOULD);
-					// System.out.println(i);
+					 System.out.println(" inner: " + i);
 				}
 				booleanQuery.add(innerQuery, BooleanClause.Occur.MUST);
 			} else {
@@ -81,7 +83,6 @@ public class Searcher extends LuceneSearcher{
 
 		}
 
-		// DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date();
 		int iCurDate;
 		Date limDate = date;
@@ -127,26 +128,38 @@ public class Searcher extends LuceneSearcher{
 	 * @return String
 	 */
 	public String serialize( ScoreDoc[ ] hits ) throws IOException{
-		String output = "[";
+		String output = "[", desc;
 		Document doc;
+		org.jsoup.nodes.Document jdoc;
+		int end;
 		for( ScoreDoc d : hits ){
 			doc = this.get( d.doc );
+			desc = doc.get( "description" );
+			jdoc = Jsoup.parse( desc );
+			end = desc.length( );
+			end = ( end < 250 ) ? end : 250;
+			desc = jdoc.text( );
+			desc = desc.substring( 0, end ) + "...";
 			output += "{";
 			output += "\"id\":\"" + d.doc + "\",";
 			output += "\"title\":" + JSONUtils.quote( doc.get( "title" ) ) + ",";
 			output += "\"link\":" + JSONUtils.quote( doc.get( "link" ) ) + ",";
+			output += "\"date\":" + JSONUtils.quote( doc.get( "pubdate" ) ) + ",";
+			output += "\"host\":" + JSONUtils.quote( doc.get( "host" ) ) + ",";
 			output += "\"score\":" + JSONUtils.quote( doc.get( "score" ) ) + ",";
 			output += "\"body\":" + JSONUtils.quote( doc.get( "body" ) ) + ",";
-			output += "\"description\":" + JSONUtils.quote( doc.get( "description" ) );
+			output += "\"description\":" + JSONUtils.quote( desc );
 			output += "},";
 		}
-		output = output.substring( 0, output.length( ) - 1 ) + "]";
+		if( output.length( ) != 1 )
+			output = output.substring( 0, output.length( ) - 1 );
+		output += "]";
 		return output;
 	}
 
 	public static void main(String[] args) {
 		Searcher s = new Searcher();
-		ScoreDoc[] d = s.query("government", "year");
+		ScoreDoc[] d = s.query("ifa and irish", "year");
 		s.printHits(d);
 	}
 

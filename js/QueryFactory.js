@@ -21,6 +21,8 @@ var QueryFactory = {
 	 */
 	exec : function( ){
 		
+		$( "#expanded" ).hide( );
+
 		// get query info
 		var query = $( "#query-input" ).val( );
 		var when = $( "#query-form select" ).val( );
@@ -47,15 +49,21 @@ var QueryFactory = {
 	 * @param object results
 	 */
 	display : function( results ){
-		
-		// display formatted results
-		var doc, out = "";
-		for( var i in results ){
-			out += "<div class=\"entry\">";
-			out += "<h3><a class=\"article\" id=\"article-" + results[ i ].id + "\">" + results[ i ].title + "</a><h3>";
-			out += "<span>Date:</span>";
-			out += "<p>" + results[ i ].description + "</p>";
-			out += "</div>";
+	
+		// no results found
+		if( results.length == 0 ){
+			out = "<h1>No Results Found</h1>";
+		}
+		else{
+			// display formatted results
+			var doc, out = "";
+			for( var i in results ){
+				out += "<div class=\"entry\">";
+				out += "<h3 class=\"header\"><span class=\"date\">" + results[ i ].date + "</span>";
+				out += "<a class=\"article\" id=\"article-" + results[ i ].id + "\">" + results[ i ].title + ", " + results[ i ].host + "</a></h3>";
+				out += "<p>" + results[ i ].description + "</p>";
+				out += "</div>";
+			}
 		}
 		
 		$( "#results" ).html( out );
@@ -70,8 +78,6 @@ var QueryFactory = {
 	 */
 	expand : function( query, callback ){
 		
-		$( "#expanded" ).hide( );
-
 		// get associations for words
 		var terms = query.split( " " );
 		var words = [ ];

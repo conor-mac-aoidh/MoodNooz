@@ -20,7 +20,7 @@ public class Indexer {
     public static void main( String [ ] args ) throws IOException, Exception{
         
         
-               ArrayList<LuceneDocument> RSSentries = new ArrayList();
+        ArrayList<LuceneDocument> RSSentries = new ArrayList();
 		RSSReader reader = new RSSReader(RSSentries);
             try {
                 reader.fetch("http://www.rte.ie/news/rss/news-headlines.xml");
@@ -32,6 +32,8 @@ public class Indexer {
                 Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
                 Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
+            } catch( Exception e ){
+                System.out.println( e.getMessage( ) );            	
             }
             System.out.println(reader.entries.size());
             LuceneIndexer indexer = new LuceneIndexer(false);

@@ -39,12 +39,15 @@ body{ text-align:center }
 #slider{ position:relative;width:1000px;height:50px;overflow-x:hidden;overflow-y:hidden;margin:0 auto;margin-top:40px;border:1px solid #bbb }
 #results{ position:absolute;padding:15px 25px;top:0;left:0;width:948px }
 #page{ padding:15px 25px;position:absolute;left:1000px;width:1001px;border-left:1px solid #bbb }
-.entry{ margin: 20px 0; }
+.entry{ margin: 20px 0;width:940px }
 .entry h3{ font-weight:bold }
 .entry span{ font-style:italic }
 .entry p{ }
 #loader{ display:none }
 #loader img{ left:45%;position:absolute;top:45%;z-index:9999999; }
+.header{ background:#039;padding:6px 15px;margin-bottom:5px }
+.header a{ color:#fff;font-weight:bold;display:block;width:90%; }
+.header .date{ color:#fff;float:right }
 #content{ margin:10px 0;width:940px }
 #expanded{ display:none;position:relative;height:18px;overflow-y:hidden }
 #expanded span{ font-style:italic }

@@ -8,27 +8,17 @@ import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.document.Document;
 import org.jsoup.Jsoup;
+import java.util.HashMap;
+import java.util.*;
 
-import java.util.Date;
 import net.sf.json.util.JSONUtils;
 
 public class Searcher extends LuceneSearcher{
 
-	public ScoreDoc[] search(BooleanQuery q){
-		ScoreDoc[] hits = null;
-		collector = TopScoreDocCollector.create(hitsPerPage, true);
-		try {
-			searcher.search(q, collector);
-			hits = collector.topDocs().scoreDocs;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return hits;
-	}
-
+	HashMap<String, Document> results = new HashMap<String, Document>( );
+	
 	/**
 	 * query
 	 * 
@@ -57,32 +47,47 @@ public class Searcher extends LuceneSearcher{
 	 * @param query
 	 * @param when
 	 * @return
+	 * @throws IOException 
 	 * 
 	 */
-	public ScoreDoc[] query(String query, String when) {
+	public ArrayList<Document> query(String query, String when) throws IOException {
 
-		BooleanQuery booleanQuery = new BooleanQuery();
-
+		ScoreDoc[ ] docs;
+		Document ldoc;
 		String[] terms = query.split(" and ");
 		for (String s : terms) {
-			 System.out.println( "outer: " + s);
+			 
 			if (s.charAt(0) == '(') {
 				BooleanQuery innerQuery = new BooleanQuery();
 				s = s.substring(2, s.length() - 2);
 				String[] inner = s.split(" or ");
 				for (String i : inner) {
-					booleanQuery.add(new TermQuery(new Term("body", i)),
-							BooleanClause.Occur.SHOULD);
-					 System.out.println(" inner: " + i);
+					docs = this.search( i, "body" );
+					for( ScoreDoc d : docs ){
+						ldoc = this.get( d.doc );
+						this.results.put( ldoc.get( "link" ), ldoc );
+					}
 				}
-				booleanQuery.add(innerQuery, BooleanClause.Occur.MUST);
+
 			} else {
-				booleanQuery.add(new TermQuery(new Term("body", s)),
-						BooleanClause.Occur.MUST);
+				docs = this.search( s, "body" );
+				for( ScoreDoc d : docs ){
+					ldoc = this.get( d.doc );
+					this.results.put( ldoc.get( "link" ), ldoc );
+				}
 			}
 
 		}
+		
+		ArrayList<Document> ordered = new ArrayList<Document>( ); 
 
+		for( Map.Entry<String, Document> entry : this.results.entrySet( ) ){
+			System.out.print( entry.getKey( ) + "\t" );
+			Document word = entry.getValue( );
+			ordered.add( word );
+		}
+		
+/*
 		Date date = new Date();
 		int iCurDate;
 		Date limDate = date;
@@ -115,8 +120,8 @@ public class Searcher extends LuceneSearcher{
 		booleanQuery.add(dateQuery, BooleanClause.Occur.MUST);
 		String b = booleanQuery.toString();
 		System.out.println(b);
-
-		return this.search(booleanQuery);
+*/
+		return ordered;
 	}
 
 	/**
@@ -127,13 +132,13 @@ public class Searcher extends LuceneSearcher{
 	 * @param ScoreDoc[ ] hits
 	 * @return String
 	 */
-	public String serialize( ScoreDoc[ ] hits ) throws IOException{
+	public String serialize( ArrayList<Document> hits ) throws IOException{
 		String output = "[", desc;
 		Document doc;
 		org.jsoup.nodes.Document jdoc;
 		int end;
-		for( ScoreDoc d : hits ){
-			doc = this.get( d.doc );
+		for( Document d : hits ){
+			doc = d;
 			desc = doc.get( "description" );
 			jdoc = Jsoup.parse( desc );
 			end = desc.length( );
@@ -141,7 +146,7 @@ public class Searcher extends LuceneSearcher{
 			desc = jdoc.text( );
 			desc = desc.substring( 0, end ) + "...";
 			output += "{";
-			output += "\"id\":\"" + d.doc + "\",";
+			output += "\"id\":\"" + doc.get( "id" ) + "\",";
 			output += "\"title\":" + JSONUtils.quote( doc.get( "title" ) ) + ",";
 			output += "\"link\":" + JSONUtils.quote( doc.get( "link" ) ) + ",";
 			output += "\"date\":" + JSONUtils.quote( doc.get( "pubdate" ) ) + ",";
@@ -157,10 +162,20 @@ public class Searcher extends LuceneSearcher{
 		return output;
 	}
 
-	public static void main(String[] args) {
-		Searcher s = new Searcher();
-		ScoreDoc[] d = s.query("ifa and irish", "year");
-		s.printHits(d);
+	//print results
+	public void printHits(ArrayList<Document> hits){
+		try{
+			System.out.println("Found " + hits.size( ) + " hits.");
+			for( Document d : hits ) {
+			    System.out.println( d.get("pubdate")+ ". " + d.get("link") + "\t" + d.get("title")+" --- ");
+			}	
+		}catch(Exception e){e.printStackTrace();}
 	}
-
+	
+	public static void main(String[] args) throws IOException{
+		Searcher s = new Searcher( );
+		ArrayList<Document> hits = s.query( "irish and government and ( government or irish )", "today" );
+		s.printHits( hits );
+	}
+	
 }

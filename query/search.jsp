@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="application/json; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@page 
 	import="java.util.*"
+	import="org.apache.lucene.document.Document"
 	import="org.apache.lucene.search.ScoreDoc"
 	import="core.MoodNooz"
 	import="core.Searcher;"
@@ -22,7 +23,7 @@
 		String when = request.getParameter( "when" );
 		
 		Searcher s = new Searcher( );
-		ScoreDoc[ ] hits = s.query( query, when );
+		ArrayList<Document> hits = s.query( query, when );
 		String output = s.serialize( hits );
 
 		// print output as JSON
